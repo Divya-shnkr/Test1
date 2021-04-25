@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <title></title>
+</head>
+<body>
+    
+    <div>
+        <input type="file" name="file" id="file" multiple>
+        <input type="button" id="btn_uploadfile" value="upload" onclick="uploadFile();">
+    </div>
+    <!-- script -->
+    <script type="text/javascript">
+    function uploadFile(){
+         var totalfiles = document.getElementById('file').files.length;
+         
+         if(totalfiles > 0){
+             var formdata = new FormData();
+             
+             //Read selected files
+             for(var index = 0;index<totalfiles;index++){
+                 formdata.append("files[]",document.getElementById('file').files[index]);
+              }
+               
+              var xhttp = new XMLHttpRequest();
+
+               // set POST method and ajax file path
+               xhttp.open("POST","ajaxfile.php",true);
+
+               // call on request changes state
+               xhttp.onreadystatechange = function(){
+                    if(this.readyState == 4 && this.status == 200){
+                        var response = this.responseText;
+              
+                        alert(response + "File uploaded.");
+                    }
+               };
+
+               // send request with data
+               xhttp.send(formdata);
+          }else{
+               alert("please select a file.");
+          }
+
+       }
+       </script>
+
+</body>
+</html>
